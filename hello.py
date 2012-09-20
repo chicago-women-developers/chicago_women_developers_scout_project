@@ -3,7 +3,6 @@
 print ("hello world")
 print ("hi puppies")
 print ("oh hey, what's up?")
-print ("welcome to girrl world")
 print ("oh hey, what's up?")
 print(":)") 
 print("more stuff")
