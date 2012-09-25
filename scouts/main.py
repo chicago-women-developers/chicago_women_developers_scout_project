@@ -14,16 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import webapp2
-from google.appengine.ext import db
-
-class Event(db.Model):
-    startDateTime = db.DateTimeProperty(auto_now_add=True)
-    endDateTime = db.DateTimeProperty(auto_now_add=True)
-    name = db.StringProperty(required=True)
-    description = db.StringProperty(required=True)
-    location = db.StringProperty(required=True)
+import cgi
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -45,35 +37,14 @@ class ScoutRegistrationHandler(webapp2.RequestHandler):
 
 class CreateEventHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write("""
-<form action="/createevent" method="post" id="eventform">
-        <div class="form">
-          <div class="field">
-            <div class="name">Name</div>
-            <div class="value"><input name="name" type="text" size="70"/></div>
-          </div>
-          <div class="field">
-            <div class="name">Description</div>
-            <div class="value"><input name="description" type="text" size="70"/></div>
-          </div>
-          <div class="buttons">
-            <span class="button"><input type="submit" name="action" value="Create Event"/></span>
-          </div>
-        </div>
-      </form>""")
-
+        name = self.request.get_all()
+        self.response.write('Event is called: ' + name[0])
+        
+        
     def post(self):
-        # startDateTime = self.request.get('start')
-        # endDateTime = self.request.get('end')
-        name = self.request.get('name')
-        description = self.request.get('description')
-        location = "baltimore"
-
-        event=Event(name=name,
-                    description=description,
-                    location=location)
-        event.put()
-        self.redirect('/viewevent/?name=' + name)
+        self.response.write('create event post')
+        
+        
 
 class ViewEventHandler(webapp2.RequestHandler):
     def get(self):
@@ -86,6 +57,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/siteregistration', SiteRegistrationHandler),
     ('/scoutregistration', ScoutRegistrationHandler),
-    ('/createevent', CreateEventHandler),
+    ('/createevent/.*', CreateEventHandler),
     ('/viewevent', ViewEventHandler)
 ], debug=True)
