@@ -20,6 +20,29 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
+class SiteRegistrationHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('register for the site (get)')
+
+    def post(self):
+        self.response.write('registerfor the site (post)')
+
+class ScoutRegistrationHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('scout register for the site (get)')
+
+    def post(self):
+        self.response.write('scout registerfor the site (post)')
+
+class CreateEventHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('create event get')
+
+    def post(self):
+        self.response.write('create event post')
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/siteregistration', SiteRegistrationHandler)
+    ('/scoutregistration', ScoutRegistrationHandler)
 ], debug=True)
