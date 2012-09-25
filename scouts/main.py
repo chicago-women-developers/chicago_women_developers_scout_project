@@ -20,6 +20,12 @@ from protorpc import messages
 from google.appengine.ext import db
 from google.appengine.api import users
 
+welcomeform="""
+	<html>
+		Welcome, %(username)s!
+	</html>
+"""
+
 class User(db.Model):
     user=db.UserProperty(required=True)
     createdate = db.DateTimeProperty(auto_now_add=True)
@@ -45,7 +51,6 @@ class Roles(messages.Enum):
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
         user = users.get_current_user()
         siteUser = UserManager()
         if user:
@@ -53,7 +58,7 @@ class LoginHandler(webapp2.RequestHandler):
             if not userExists:
                 self.response.out.write('User should get form to enter his/her role')
             else:
-                self.response.out.write('Hello, ' + user.nickname())
+            	self.response.out.write(welcomeform % {"username":user.nickname()})
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
