@@ -16,6 +16,46 @@
 #
 import webapp2
 import cgi
+from protorpc import messages
+from google.appengine.ext import db
+from google.appengine.api import users
+
+class User(db.Model):
+    user=db.UserProperty(required=True)
+    createdate = db.DateTimeProperty(auto_now_add=True)
+    role=db.IntegerProperty(required=True)
+
+
+class UserManager:
+    def checkUserExists(self, userObj): #I have no idea why we need to pass self, but it fixes this error: checkUserExists() takes exactly 1 argument (2 given)
+        userToCheck = db.GqlQuery("Select * from User where user=:1",userObj)
+        if not userToCheck:
+            return False
+        else:
+            return True
+
+    def insertUser(user, role):
+        userToInsert = User(user=user, role=role)
+        userToInsert.put()
+
+class Roles(messages.Enum):
+    ADMIN = 1
+    PARENT = 2
+    SCOUT = 3
+
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        user = users.get_current_user()
+        siteUser = UserManager()
+        if user:
+            userExists = siteUser.checkUserExists(user)
+            if not userExists:
+                self.response.out.write('User should get form to enter his/her role')
+            else:
+                self.response.out.write('Hello, ' + user.nickname())
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -58,5 +98,6 @@ app = webapp2.WSGIApplication([
     ('/siteregistration', SiteRegistrationHandler),
     ('/scoutregistration', ScoutRegistrationHandler),
     ('/createevent/.*', CreateEventHandler),
+    ('/login', LoginHandler),
     ('/viewevent', ViewEventHandler)
 ], debug=True)
