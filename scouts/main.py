@@ -23,6 +23,10 @@ from google.appengine.api import users
 welcomeform="""
 	<html>
 		Welcome, %(username)s!
+		<form>
+			<input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
+			<input type="submit" value="Submit">
+		</form>
 	</html>
 """
 
@@ -33,14 +37,14 @@ class User(db.Model):
 
 
 class UserManager:
-    def checkUserExists(self, userObj): #I have no idea why we need to pass self, but it fixes this error: checkUserExists() takes exactly 1 argument (2 given)
-        userToCheck = db.GqlQuery("Select * from User where user=:1",userObj)
-        if not userToCheck:
+    def checkUserExists(self, user): #I have no idea why we need to pass self, but it fixes this error: checkUserExists() takes exactly 1 argument (2 given)
+        userToCheck = db.GqlQuery("SELECT * FROM User WHERE user = :1 ",user)
+        if not userToCheck.get():
             return False
         else:
             return True
 
-    def insertUser(user, role):
+    def insertUser(self, user, role):
         userToInsert = User(user=user, role=role)
         userToInsert.put()
 
@@ -56,9 +60,10 @@ class LoginHandler(webapp2.RequestHandler):
         if user:
             userExists = siteUser.checkUserExists(user)
             if not userExists:
-                self.response.out.write('User should get form to enter his/her role')
-            else:
+            	siteUser.insertUser(user, int(Roles.PARENT))
             	self.response.out.write(welcomeform % {"username":user.nickname()})
+            else:
+            	self.response.out.write('Welcome ' + user.nickname())
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
