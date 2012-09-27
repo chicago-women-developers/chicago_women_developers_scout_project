@@ -20,13 +20,20 @@ from protorpc import messages
 from google.appengine.ext import db
 from google.appengine.api import users
 
-welcomeform="""
+registerForm="""
 	<html>
-		Welcome, %(username)s!
-		<form>
+		Hello, %(username)s!
+		<form action="/scoutregistration" method="post">
 			<input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
 			<input type="submit" value="Submit">
 		</form>
+	</html>
+"""
+
+welcomeForm="""
+	<html>
+		Welcome, %(username)s!
+		Thank you for registering!
 	</html>
 """
 
@@ -60,16 +67,17 @@ class LoginHandler(webapp2.RequestHandler):
         if user:
             userExists = siteUser.checkUserExists(user)
             if not userExists:
-            	siteUser.insertUser(user, int(Roles.PARENT))
-            	self.response.out.write(welcomeform % {"username":user.nickname()})
+            	self.redirect("/scoutregistration")
             else:
             	self.response.out.write('Welcome ' + user.nickname())
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
+
 
 class SiteRegistrationHandler(webapp2.RequestHandler):
     def get(self):
@@ -78,22 +86,30 @@ class SiteRegistrationHandler(webapp2.RequestHandler):
     def post(self):
         self.response.write('registerfor the site (post)')
 
+
 class ScoutRegistrationHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('scout register for the site (get)')
-
+    	user = users.get_current_user()
+        self.response.write(registerForm % {"username":user.nickname()})
+        
     def post(self):
-        self.response.write('scout registerfor the site (post)')
+    	user = users.get_current_user()
+        isParent = self.request.get('isParent')
+        siteUser = UserManager()
+        if isParent:
+        	siteUser.insertUser(user, int(Roles.PARENT))
+        else:
+        	siteUser.insertUser(user, int(Roles.SCOUT))
+        self.response.write(welcomeForm % {"username":user.nickname()})
+
 
 class CreateEventHandler(webapp2.RequestHandler):
     def get(self):
         name = self.request.get_all()
         self.response.write('Event is called: ' + name[0])
         
-        
     def post(self):
         self.response.write('create event post')
-        
         
 
 class ViewEventHandler(webapp2.RequestHandler):
