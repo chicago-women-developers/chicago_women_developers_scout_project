@@ -1,7 +1,8 @@
 chicago_women_developers_scout_project
 ======================================
 
-This is the project of the Chicago Women Developers for the boy scouts and cub scouts.
+<h3>Purpose</h3>
+This is a project by the Chicago Women Developers to create a website for a local boy scouts and cub scout troops.
 
 <h3>Technology</h3>
 <ul>
@@ -9,9 +10,29 @@ This is the project of the Chicago Women Developers for the boy scouts and cub s
   <li>Google AppEngine</li>
 </ul>
 
+<h3>Goals</h3>
+<ul>
+  <li>Provide an easy way to request and collect forms and information from parents</li>
+</ul>
 
-Boyscout and Cubscout Website Project 
-*private-sign in required 
+<h3>Features</h3>
+<ul>
+  <li>Security
+    <ul>
+      <li>Private-sign in required</li>
+    </ul>
+  </li>
+  <li>Registration
+    <ul>
+      <li>Scouts must be able to register online</li>
+    </ul>
+  </li>
+  <li>Form Collection
+    <ul>
+      <li>Distribute forms</li>
+    </li>
+    </ul>
+</ul>
 
 Goal:
 need from parents - information consolidated 
