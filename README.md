@@ -3,6 +3,12 @@ chicago_women_developers_scout_project
 
 This is the project of the Chicago Women Developers for the boy scouts and cub scouts.
 
+<h3>Technology</h3>
+<ul>
+  <li>Python 2.7</li>
+  <li>Google AppEngine</li>
+</ul>
+
 
 Boyscout and Cubscout Website Project 
 *private-sign in required 
