@@ -1,0 +1,38 @@
+{% extends "bootstrap-starter.html" %}
+
+{% block title %}Awesome Boy Scouts App.{% endblock %}
+
+{% block header %}
+<div class="hero-unit">
+    <h1>App Engine Essence<img src="/img/apple-touch-icon-72x72.png" style="vertical-align: top"/></h1>
+    <p>
+        A union of <a rel="nofollow" href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>
+        and the <a rel="nofollow" href="http://www.appengine-boilerplate.com/">App Engine Boilerplate</a>.
+    </p>
+</div>
+    
+{% endblock %}
+
+{% block main %}
+    {% if is_testenv%}
+    <div class="alert">
+        <strong>ALERT</strong>: you are currently using the development environment
+    </div>
+{% endif %}
+    <div class="row">
+        <div class="span9">
+            <h2>What is this?</h2>
+            <p>
+                Hello World!
+            </p>
+        </div>
+    </div>
+    
+    <script> 
+        (function(w,d){
+            Modernizr.load({load: '//connect.facebook.net/en_US/all.js#xfbml=1'});
+            Modernizr.load({load: '//platform.twitter.com/widgets.js'});
+            Modernizr.load({load: 'https://apis.google.com/js/plusone.js'});
+        }(this,document));
+    </script>  
+{% endblock %}
