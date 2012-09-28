@@ -87,8 +87,8 @@ This is a project by the Chicago Women Developers to create a website for a loca
   <li>Event Table
     <ul>
       <li>name, event date, description, location, contact, rsvp date, age range, event id (key)</li>
-   </ul>
-   </ul>
+    </ul>
+  </li>
   <li>Parent table 
     <ul>
       <li>user id</li>
