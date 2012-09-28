@@ -22,88 +22,76 @@ This is a project by the Chicago Women Developers to create a website for a loca
       <li>Private-sign in required</li>
     </ul>
   </li>
-  <li>Registration
+  <li>Login & Registration
     <ul>
+      <li>Scouts and parents must be able to login</li>
       <li>Scouts must be able to register online</li>
     </ul>
   </li>
-  <li>Form Collection
+  <li>Form Distribution + Collection
     <ul>
-      <li>Distribute forms</li>
-    </li>
+      <li>Health form</li>
+      <li>Create a new form</li>
+      <li>Distribute a form to the troop</li>
+      <li>Parents fill out the forms</li>
+      <li>Parents submit the forms back to the troop leader</li>
     </ul>
+  </li>
+  <li>Payment Collection
+    <ul>
+      <li>Scout fees</li>
+      <li>Event fees</li>
+      </ul>
+    </li>
+   <li>Event creation and RSVPs</li>
+     <ul>
+       <li>Create an event</li>
+       <li>Send out invites</li>
+       <li>Collect RSVPs</li>
+       <li>Send out meeting reminders</li>
+      </ul>
+    </li>
+    <li>Event details pages</li>
+      <ul>
+        <li>There should be 1 page detailing each event</li>
+      </ul>
+    </li>
+    <li>Calendar
+      <ul>
+        <li>Troop calendar</li>
+        <li>Export to personal calendar</li>
+      </ul>
+    </li>
+    <li>Directory
+      <ul>
+        <li>Scout name</li>
+        <li>Parent/Guardian name #1</li>
+        <li>Parent/Guardian name #2</li>
+        <li>Address</li>
+        <li>Cell phone</li>
+        <li>Home phone</li>
+      </ul>
+    </li>
+    <li>General Troop Info</li>
+    <li>Photos
+      <ul>
+        <li>Upload pictures</li>
+        <li>Upload pics from smartphone (app inventor)</li>
+      </ul
+    </li>
+    <li>Lightbulb feature</li>
 </ul>
 
-Goal:
-need from parents - information consolidated 
-  -distribute forms
-	-manual registration 
-
-
-Basic brainstorm: 
-Annual registration and payment
-	-healtform? downloadable 
-
-events with details RSVP
-
-calendars
-
-Login 
-
-email meeting reminders 
-
-directory with contact info 
-
-name includes troop info 
-
-
-
-Detailed Brainstorm: 
-
-Main Page (after logged in) 
-goal: priorities on page
-how do people interact with devices? 
-
-
-Events (small number? just put it on homepage) 
--lightbulb feature? 
--1 dedicated page per event? 
--add to your calendar function 
-
-
-Nice to have features:
--upload pics 
--add to your own calendar 
--upload pics from smartphone (app inventor) 
-
-Databases: 
-
-Event Table
--name, event date, description, location, contact, rsvp date, age range, event id (key)
-
-Parent table 
--user id 
-
-
-Functionality: 
-
-Account Creation: with security 
--add to user table 
-
-Registration form
-	-adding info to scout 
-	-payment 
-
-	-download health form 
-
-Events: 
--admin function (Create, edit ) 
--viewing an event(basic view, detailed view/separate page) 
--RSVP (Parents RSVP their children) 
-
-
-
-Lanuages: 
-Python vs Ruby 
-Rails vs Sinatra 
-Micro vs Macro 
+<h3>Database</h3> 
+<ul>
+  <li>Event Table
+    <ul>
+      <li>name, event date, description, location, contact, rsvp date, age range, event id (key)</li>
+   </ul>
+   </ul>
+  <li>Parent table 
+    <ul>
+      <li>user id</li>
+    </ul>
+  </li>
+</ul>
