@@ -26,17 +26,6 @@ import os
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/../templates/"))
 
-
-registerForm="""
-    <html>
-        Hello, %(username)s!
-        <form action="/scoutregistration" method="post">
-            <input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
-            <input type="submit" value="Submit">
-        </form>
-    </html>
-"""
-
 welcomeForm="""
     <html>
         Welcome, %(username)s!
@@ -173,8 +162,8 @@ class ScoutRegistrationHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             template_values = {"username":user.nickname()}
-            template = jinja_environment.get_template('registrationform.html')
-            self.response.out.write(template.render(template_values))
+            path = os.path.join(os.path.dirname(__file__), '../templates/registrationform.html')
+            self.response.out.write(template.render(path, template_values))
         else:
             self.redirect(users.create_login_url(self.request.uri))
         
