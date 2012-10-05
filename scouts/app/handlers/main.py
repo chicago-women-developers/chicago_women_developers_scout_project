@@ -20,14 +20,6 @@ from baserequesthandler import BaseRequestHandler
 from tools.common import decode
 from tools.decorators import login_required, admin_required
 
-welcomeForm="""
-    <html>
-        Welcome, %(username)s!
-        Thank you for registering!
-    </html>
-"""
-
-
 # Main page request handler
 class Main(BaseRequestHandler):
     def get(self):
@@ -169,7 +161,10 @@ class ScoutRegistrationHandler(webapp2.RequestHandler):
             siteUser.insertUser(user, int(Roles.PARENT))
         else:
             siteUser.insertUser(user, int(Roles.SCOUT))
-        self.response.write(welcomeForm % {"username":user.nickname()})
+
+        template_values = {"username":user.nickname()}
+        path = os.path.join(os.path.dirname(__file__), '../templates/welcomeform.html')
+        self.response.write(template.render(path, template_values))
 
 
 class CreateEventHandler(webapp2.RequestHandler):
