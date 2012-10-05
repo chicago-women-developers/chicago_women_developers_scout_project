@@ -20,12 +20,6 @@ from baserequesthandler import BaseRequestHandler
 from tools.common import decode
 from tools.decorators import login_required, admin_required
 
-import jinja2
-import os
-
-jinja_environment = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/../templates/"))
-
 welcomeForm="""
     <html>
         Welcome, %(username)s!
