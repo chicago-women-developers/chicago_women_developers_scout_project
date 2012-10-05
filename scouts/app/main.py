@@ -19,6 +19,11 @@ import cgi
 from protorpc import messages
 from google.appengine.ext import db
 from google.appengine.api import users
+import jinja2
+import os
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 registerForm="""
 	<html>
@@ -90,7 +95,12 @@ class SiteRegistrationHandler(webapp2.RequestHandler):
 class ScoutRegistrationHandler(webapp2.RequestHandler):
     def get(self):
     	user = users.get_current_user()
-        self.response.write(registerForm % {"username":user.nickname()})
+        if user:
+            template_values = {"username":user.nickname()}
+            template = jinja_environment.get_template('registrationform.html')
+            self.response.out.write(template.render(template_values))
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
         
     def post(self):
     	user = users.get_current_user()

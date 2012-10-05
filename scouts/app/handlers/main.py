@@ -20,6 +20,13 @@ from baserequesthandler import BaseRequestHandler
 from tools.common import decode
 from tools.decorators import login_required, admin_required
 
+import jinja2
+import os
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/../templates/"))
+
+
 registerForm="""
     <html>
         Hello, %(username)s!
@@ -164,7 +171,12 @@ class SiteRegistrationHandler(webapp2.RequestHandler):
 class ScoutRegistrationHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        self.response.write(registerForm % {"username":user.nickname()})
+        if user:
+            template_values = {"username":user.nickname()}
+            template = jinja_environment.get_template('registrationform.html')
+            self.response.out.write(template.render(template_values))
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
         
     def post(self):
         user = users.get_current_user()
