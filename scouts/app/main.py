@@ -118,12 +118,3 @@ class ViewEventHandler(webapp2.RequestHandler):
 
     def post(self):
         self.response.write('view event (post)')
-
-app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/siteregistration', SiteRegistrationHandler),
-    ('/scoutregistration', ScoutRegistrationHandler),
-    ('/createevent/.*', CreateEventHandler),
-    ('/login', LoginHandler),
-    ('/viewevent', ViewEventHandler)
-], debug=True)

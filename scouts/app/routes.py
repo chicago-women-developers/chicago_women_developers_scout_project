@@ -9,5 +9,6 @@ urls = [
     webapp2.Route(r'/scoutregistration', handler=handlers.ScoutRegistrationHandler, name="scoutregistration"),
     webapp2.Route(r'/createevent/.*', handler=handlers.CreateEventHandler, name="createeventhandler"),
     webapp2.Route(r'/login', handler=handlers.LoginHandler, name="login"),
+    webapp2.Route(r'/viewevent', handler=handlers.ViewEventHandler, name="viewevent"),
     (r'.*', handlers.NotFound)
 ]
