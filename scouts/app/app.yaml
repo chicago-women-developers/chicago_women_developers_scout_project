@@ -48,6 +48,11 @@ handlers:
   #mime_type: text/css
   static_files: static/font/\1
   upload: static/font/(.*\.(eot|svg|svgz|ttf|woff))
+  
+- url: /PDF(.*\.pdf)
+  mime_type: application/pdf
+  static_files: static/\1
+  upload: static/PDF(.*\.pdf)
 
 
 - url: /js/(.*\.js)
