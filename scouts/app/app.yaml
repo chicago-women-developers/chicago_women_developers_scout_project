@@ -49,11 +49,9 @@ handlers:
   static_files: static/font/\1
   upload: static/font/(.*\.(eot|svg|svgz|ttf|woff))
   
-- url: /PDF(.*\.pdf)
+- url: /PDF
   mime_type: application/pdf
-  static_files: static/\1
-  upload: static/PDF(.*\.pdf)
-
+  static_dir: static/PDF/
 
 - url: /js/(.*\.js)
   mime_type: text/javascript
