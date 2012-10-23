@@ -113,7 +113,6 @@ class AccountSetupHandler(BaseRequestHandler):
 
 class CreateEventHandler(BaseRequestHandler):
   def get(self):
-    name = self.request.get_all()
     self.render('create_event.html')
         
   def post(self):
@@ -123,12 +122,13 @@ class CreateEventHandler(BaseRequestHandler):
 class LoginHandler(BaseRequestHandler):
   def get(self):
     user = users.get_current_user()
-    siteUser = UserManager()
+    site_user = UserManager()
     if user:
-      userExists = siteUser.checkUserExists(user)
-      if not userExists:
-        self.redirect('/scoutregistration')
+      user_exists = site_user.checkUserExists(user)
+      if not user_exists:
+        self.redirect('/scout_registration')
       else:
+        # TODO: Make this use a template.
         self.response.out.write('Welcome ' + user.nickname())
     else:
       self.redirect(users.create_login_url(self.request.uri))
@@ -150,7 +150,7 @@ class ScoutRegistrationHandler(BaseRequestHandler):
         
   def post(self):
     user = users.get_current_user()
-    is_parent = self.request.get('isParent')
+    is_parent = self.request.get('is_parent')
     site_user = UserManager()
     if is_parent:
       site_user.insertUser(user, int(Roles.PARENT))
@@ -158,16 +158,7 @@ class ScoutRegistrationHandler(BaseRequestHandler):
       site_user.insertUser(user, int(Roles.SCOUT))
 
     template_values = {'username': user.nickname()}
-    # TODO: Rename this html templates.
     self.render('scout_registration_complete.html', template_values)
-
-
-class SiteRegistrationHandler(BaseRequestHandler):
-  def get(self):
-    self.render('site_registration.html')
-
-  def post(self):
-    self.render('site_registration.html')
 
 
 class ViewEventHandler(BaseRequestHandler):
@@ -186,15 +177,15 @@ class NotFoundHandler(BaseRequestHandler):
     self.error404()
 
 
+# 
 app = webapp2.WSGIApplication([
     webapp2.Route(r'/', handler=MainHandler, name="home"),
     webapp2.Route(r'/account', handler=AccountHandler, name="account"),
     webapp2.Route(r'/account_setup', handler=AccountSetupHandler, name="account_setup"),
-    webapp2.Route(r'/create_event/.*', handler=CreateEventHandler, name="create_event"),
+    webapp2.Route(r'/create_event', handler=CreateEventHandler, name="create_event"),
     webapp2.Route(r'/login', handler=LoginHandler, name="login"),
     webapp2.Route(r'/logout', handler=LogoutHandler, name="logout"),
     webapp2.Route(r'/scout_registration', handler=ScoutRegistrationHandler, name="scout_registration"),
-    webapp2.Route(r'/site_registration', handler=SiteRegistrationHandler, name="site_registration"),
     webapp2.Route(r'/view_event', handler=ViewEventHandler, name="view_event"),
     webapp2.Route(r'.*', handler=NotFoundHandler, name="error")
 ], debug=True)

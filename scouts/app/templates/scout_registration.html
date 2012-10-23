@@ -1,9 +1,10 @@
 {% extends "bootstrap-starter.html" %}
 
 {% block main %}
+  <h2>Scout Registration</h2>
   Hello, {{ username }}!
   <form action="/scout_registration" method="post">
-    <input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
-    <input type="submit" value="Submit">
+    <input type="checkbox" name="is_parent" value="true"> Are you a Parent?<br>
+    <input type="submit" value="submit">
   </form>
 {% endblock %}
