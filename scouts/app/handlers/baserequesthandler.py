@@ -54,10 +54,10 @@ class BaseRequestHandler(webapp2.RequestHandler):
 
         # Routes common to all templates
         nav_bar = {
-            'home':webapp2.uri_for('home'),
+            'home': webapp2.uri_for('home'),
             'login': webapp2.uri_for('login'),
-            #'logout': webapp2.uri_for('logout'),
-            #'account': webapp2.uri_for('account')
+            'logout': webapp2.uri_for('logout'),
+            'account': webapp2.uri_for('account')
         }
         # Preset values for the template
         values = {
