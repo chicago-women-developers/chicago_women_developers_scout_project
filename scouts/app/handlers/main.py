@@ -15,6 +15,8 @@ from google.appengine.ext.webapp import template
 import mc
 import tools.mailchimp
 
+# TODO: We really shouldn't be importing * from a module.  Figure
+# out what we need instead of *.
 from models import *
 from baserequesthandler import BaseRequestHandler
 from tools.common import decode
@@ -27,16 +29,16 @@ class User(db.Model):
   role=db.IntegerProperty(required=True)
 
 class UserManager:
-  def checkUserExists(self, user): #I have no idea why we need to pass self, but it fixes this error: checkUserExists() takes exactly 1 argument (2 given)
-    userToCheck = db.GqlQuery('SELECT * FROM User WHERE user =: 1 ',user)
-    if not userToCheck.get():
+  def checkUserExists(self, user):
+    user_to_check = db.GqlQuery('SELECT * FROM User WHERE user =: 1 ',user)
+    if not user_to_check.get():
       return False
     else:
       return True
 
   def insertUser(self, user, role):
-    userToInsert = User(user=user, role=role)
-    userToInsert.put()
+    user_to_insert = User(user=user, role=role)
+    user_to_insert.put()
 
 class Roles(messages.Enum):
   ADMIN = 1
@@ -59,6 +61,8 @@ class AccountHandler(BaseRequestHandler):
   (email, username, newsletter).
   """
   def get(self):
+    success = self.request.get('success', False)
+
     target_url = decode(self.request.get('continue'))
     # Circumvent a bug in gae which prepends the url again
     if target_url and '?continue=' in target_url:
@@ -75,7 +79,7 @@ class AccountHandler(BaseRequestHandler):
       return
 
     # Render the account website
-    self.render('account.html', {'setup_uri': self.uri_for('setup')})
+    self.render('account.html', {'setup_uri': self.uri_for('account_setup'), 'success': success})
 
 
 class AccountSetupHandler(BaseRequestHandler):
@@ -85,7 +89,9 @@ class AccountSetupHandler(BaseRequestHandler):
     email = decode(self.request.get('email'))
     subscribe = decode(self.request.get('subscribe'))
     target_url = decode(self.request.get('continue'))
-    target_url = target_url or self.uri_for('account')
+    template_values = {}
+    if not target_url:
+      target_url = self.uri_for('account') + '?success=1'
 
     # Set a flag whether newsletter subscription setting has changed
     subscription_changed = bool(self.userprefs.subscribed_to_newsletter) \
@@ -177,7 +183,9 @@ class NotFoundHandler(BaseRequestHandler):
     self.error404()
 
 
-# 
+# Keep this in alphabetical order by URI.
+# TODO: If/when we pull the handlers out into their own file, we
+# should move these into the appropriate files.
 app = webapp2.WSGIApplication([
     webapp2.Route(r'/', handler=MainHandler, name="home"),
     webapp2.Route(r'/account', handler=AccountHandler, name="account"),

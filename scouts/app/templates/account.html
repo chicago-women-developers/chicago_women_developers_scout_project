@@ -1,6 +1,11 @@
 {% extends "bootstrap-starter.html" %}
 
 {% block main %}
+  {% if success %}
+    <div class="message">
+      Your changes have been saved!
+    </div>
+  {% endif %}
   <h2>Account</h2>
   <form action="{{setup_uri}}" method="post" class="well">
     <input type="hidden" name="continue" value="{{ target_url }}" />
@@ -20,7 +25,7 @@
       <label class="control-label" for="subscribe">Subscription:</label>
       <div class="controls">
         <label class="checkbox">
-        <input type="checkbox" value="on" name="subscribe" id="subscribe" {%if prefs.subscribed_to_newsletter %}checked{% endif %} />
+        <input type="checkbox" value="on" name="subscribe" id="subscribe" {% if prefs.subscribed_to_newsletter %}checked{% endif %} />
           Receive our newsletter
         </label>
       </div>

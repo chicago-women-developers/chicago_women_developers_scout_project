@@ -16,6 +16,13 @@ mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
    Author: @AlchemyCS
    ========================================================================== */
 
+.message {
+  background-color: #999;
+  border: 1px solid #CCC;
+  color: #000; 
+  margin-bottom: 10px;
+  padding: 10px;
+}
 
 .navbar-inner { /* a quick and dirty way to customise the basic bootstrap css */
     background: rgb(125,126,125); /* Old browsers */
