@@ -1,7 +1,9 @@
-	<html>
-		Hello, {{ username }}!
-		<form action="/scoutregistration" method="post">
-			<input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
-			<input type="submit" value="Submit">
-		</form>
-	</html>
+{% extends "bootstrap-starter.html" %}
+
+{% block main %}
+  Hello, {{ username }}!
+  <form action="/scoutregistration" method="post">
+    <input type="checkbox" name="isParent" value="true">Are you a Parent?<br>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
