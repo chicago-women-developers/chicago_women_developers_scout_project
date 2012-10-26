@@ -135,7 +135,8 @@ class LoginHandler(BaseRequestHandler):
         self.redirect('/scout_registration')
       else:
         # TODO: Make this use a template.
-        self.response.out.write('Welcome ' + user.nickname())
+        #self.response.out.write('Welcome ' + user.nickname())
+        self.redirect('/login_welcome')
     else:
       self.redirect(users.create_login_url(self.request.uri))
 
@@ -143,6 +144,13 @@ class LoginHandler(BaseRequestHandler):
 class LogoutHandler(BaseRequestHandler):
   def get(self):
     self.render('logout.html')
+
+
+class LoginWelcomeHandler(BaseRequestHandler):
+  def get(self):
+    user = users.get_current_user()
+    template_values = {'username': user.nickname()}
+    self.render('login_welcome.html', template_values)
 
 
 class ScoutRegistrationHandler(BaseRequestHandler):
@@ -196,6 +204,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route(r'/account_setup', handler=AccountSetupHandler, name="account_setup"),
     webapp2.Route(r'/create_event', handler=CreateEventHandler, name="create_event"),
     webapp2.Route(r'/login', handler=LoginHandler, name="login"),
+    webapp2.Route(r'/login_welcome', handler=LoginWelcomeHandler, name="login_welcome"),
     webapp2.Route(r'/logout', handler=LogoutHandler, name="logout"),
     webapp2.Route(r'/scout_registration', handler=ScoutRegistrationHandler, name="scout_registration"),
     webapp2.Route(r'/view_event', handler=ViewEventHandler, name="view_event"),
