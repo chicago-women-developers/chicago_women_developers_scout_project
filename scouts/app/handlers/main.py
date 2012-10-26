@@ -24,13 +24,13 @@ from tools.decorators import login_required, admin_required
 
 # TODO: Move this into its own database or model file.
 class User(db.Model):
-  user=db.UserProperty(required=True)
-  createdate = db.DateTimeProperty(auto_now_add=True)
-  role=db.IntegerProperty(required=True)
+  user = db.UserProperty(required = True)
+  createdate = db.DateTimeProperty(auto_now_add = True)
+  role = db.IntegerProperty(required = True)
 
 class UserManager:
   def checkUserExists(self, user):
-    user_to_check = db.GqlQuery('SELECT * FROM User WHERE user = :1 ',user)
+    user_to_check = db.GqlQuery('SELECT * FROM User WHERE user = :1 ', user)
     if not user_to_check.get():
       return False
     else:
@@ -186,6 +186,11 @@ class ViewEventHandler(BaseRequestHandler):
   def post(self):
     self.render('view_event.html')
 
+class UserListHandler(BaseRequestHandler):
+  def get(self):
+    users = User.all().fetch(100)
+    template_values = {'users': users}
+    self.render('user_list.html', template_values)
 
 class NotFoundHandler(BaseRequestHandler):
   def get(self):
@@ -193,7 +198,6 @@ class NotFoundHandler(BaseRequestHandler):
         
   def post(self):
     self.error404()
-
 
 # Keep this in alphabetical order by URI.
 # TODO: If/when we pull the handlers out into their own file, we

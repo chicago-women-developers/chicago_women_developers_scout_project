@@ -1,0 +1,17 @@
+{% extends "bootstrap-starter.html" %}
+
+{% block main %}
+  <h2>List all the users</h2>
+  <div>
+    {% for user in users %}
+    {{ user.user.nickname }} is a
+    {% if user.role == 2 %}
+    parent
+    {% else %}
+    not-parent
+    {% endif %}
+    <br>
+    {% endfor %}
+  </div>
+{% endblock main %}
+
