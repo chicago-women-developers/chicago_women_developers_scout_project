@@ -13,6 +13,7 @@ urls = [
     webapp2.Route(r'/login', handler=handlers.LoginHandler, name="login"),
     webapp2.Route(r'/logout', handler=handlers.LogoutHandler, name="logout"),
     webapp2.Route(r'/scout_registration', handler=handlers.ScoutRegistrationHandler, name="scout_registration"),
+    webapp2.Route(r'/user_list', handler=handlers.UserListHandler, name="user_list"),
     webapp2.Route(r'/view_event', handler=handlers.ViewEventHandler, name="view_event"),
     webapp2.Route(r'.*', handler=handlers.NotFoundHandler, name="error")
 ]
