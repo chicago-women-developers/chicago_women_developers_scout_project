@@ -134,8 +134,6 @@ class LoginHandler(BaseRequestHandler):
       if not user_exists:
         self.redirect('/scout_registration')
       else:
-        # TODO: Make this use a template.
-        #self.response.out.write('Welcome ' + user.nickname())
         self.redirect('/login_welcome')
     else:
       self.redirect(users.create_login_url(self.request.uri))
@@ -143,7 +141,13 @@ class LoginHandler(BaseRequestHandler):
 
 class LogoutHandler(BaseRequestHandler):
   def get(self):
-    self.render('logout.html')
+    user = users.get_current_user()
+    site_user = UserManager()
+    if user:
+      self.redirect(users.create_logout_url('/logout'))
+    else:
+      self.redirect('/') 
+    
 
 
 class LoginWelcomeHandler(BaseRequestHandler):
