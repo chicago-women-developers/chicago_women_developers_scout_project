@@ -190,7 +190,9 @@ class ScoutRegistrationHandler(BaseRequestHandler):
 
 class ViewEventHandler(BaseRequestHandler):
   def get(self):
-    self.render('view_event.html')
+    events = Event.all().fetch(100)
+    template_values = {'events': events}
+    self.render('view_event.html', template_values)
 
   def post(self):
     self.render('view_event.html')
