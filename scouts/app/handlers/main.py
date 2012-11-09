@@ -40,6 +40,13 @@ class UserManager:
     user_to_insert = User(user=user, role=role)
     user_to_insert.put()
 
+# TODO: Move this into its own database or model file.
+class Event(db.Model):
+  eventName = db.StringProperty(required = True)
+  createdate = db.DateTimeProperty(auto_now_add = True)
+  eventId = db.IntegerProperty()
+  eventDescription = db.StringProperty()
+
 class Roles(messages.Enum):
   ADMIN = 1
   PARENT = 2
@@ -122,8 +129,10 @@ class CreateEventHandler(BaseRequestHandler):
     self.render('create_event.html')
         
   def post(self):
-    self.render('create_event.html')
-
+    name = self.request.get('eventName')
+    description = self.request.get('description')
+    Event(eventName = name, eventDescription = description).put()
+    self.render('index.html')
 
 class LoginHandler(BaseRequestHandler):
   def get(self):

@@ -2,7 +2,10 @@
 
 {% block main %}
   <h2>Create an event</h2>
-  <div>
-    TODO: Fill me in with content!
-  </div> 
+  <form action="/create_event" method="post">
+    Event name: <input type="text" name="eventName"><br>
+    Event description:
+    <TEXTAREA NAME="description" COLS=40 ROWS=6></TEXTAREA>
+    <input type="submit" value="submit">
+  </form>
 {% endblock main %}
