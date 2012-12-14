@@ -67,4 +67,3 @@ handlers:
 # All other requests go to app.py
 - url: /.*
   script: app.application
-

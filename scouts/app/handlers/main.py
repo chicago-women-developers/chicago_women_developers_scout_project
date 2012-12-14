@@ -192,7 +192,6 @@ class ScoutRegistrationHandler(BaseRequestHandler):
 class ViewEventHandler(BaseRequestHandler):
   def get(self):
     events = Event.all().fetch(100)
-    logging.info("length" +str(len(events)))
     template_values = {'events': events}
     self.render('view_event.html', template_values)
 
