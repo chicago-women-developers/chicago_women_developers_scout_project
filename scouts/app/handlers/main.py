@@ -132,7 +132,8 @@ class CreateEventHandler(BaseRequestHandler):
     name = self.request.get('eventName')
     description = self.request.get('description')
     Event(eventName = name, eventDescription = description).put()
-    self.render('index.html')
+    logging.info("created event with name " + name)
+    self.redirect('/view_event')
 
 class LoginHandler(BaseRequestHandler):
   def get(self):
@@ -190,10 +191,10 @@ class ScoutRegistrationHandler(BaseRequestHandler):
 
 class ViewEventHandler(BaseRequestHandler):
   def get(self):
-    self.render('view_event.html')
-
-  def post(self):
-    self.render('view_event.html')
+    events = Event.all().fetch(100)
+    logging.info("length" +str(len(events)))
+    template_values = {'events': events}
+    self.render('view_event.html', template_values)
 
 class UserListHandler(BaseRequestHandler):
   def get(self):
@@ -214,6 +215,7 @@ class NotFoundHandler(BaseRequestHandler):
 app = webapp2.WSGIApplication([
     webapp2.Route(r'/', handler=MainHandler, name="home"),
     webapp2.Route(r'/account', handler=AccountHandler, name="account"),
+
     webapp2.Route(r'/account_setup', handler=AccountSetupHandler, name="account_setup"),
     webapp2.Route(r'/create_event', handler=CreateEventHandler, name="create_event"),
     webapp2.Route(r'/login', handler=LoginHandler, name="login"),

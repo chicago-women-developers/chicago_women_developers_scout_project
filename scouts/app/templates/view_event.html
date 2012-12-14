@@ -3,7 +3,10 @@
 {% block main %}
   <h2>View an event</h2>
   <div>
-    TODO: Fill me in with content!
+    {% for event in events %}
+    {{ event.eventName }}
+    <br>
+    {% endfor %}
   </div> 
 {% endblock main %}
 
